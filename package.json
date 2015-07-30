@@ -35,7 +35,7 @@
     "gulp-typescript": "^2.8.0",
     "mocha": "^2.2.5",
     "open": "0.0.5",
-    "typescript": "^1.4.1",
+    "typescript": "1.4.1",
     "typescript-register": "^1.1.0"
   }
 }
