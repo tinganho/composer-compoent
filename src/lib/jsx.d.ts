@@ -10,138 +10,138 @@ declare module JSX {
 
     export interface IntrinsicElements {
         // HTML
-        a: HtmlAttribute;
-        abbr: HtmlAttribute;
-        address: HtmlAttribute;
-        area: HtmlAttribute;
-        article: HtmlAttribute;
-        aside: HtmlAttribute;
-        audio: HtmlAttribute;
-        b: HtmlAttribute;
-        base: HtmlAttribute;
-        bdi: HtmlAttribute;
-        bdo: HtmlAttribute;
-        big: HtmlAttribute;
-        blockquote: HtmlAttribute;
-        body: HtmlAttribute;
-        br: HtmlAttribute;
-        button: HtmlAttribute;
-        canvas: HtmlAttribute;
-        caption: HtmlAttribute;
-        cite: HtmlAttribute;
-        code: HtmlAttribute;
-        col: HtmlAttribute;
-        colgroup: HtmlAttribute;
-        data: HtmlAttribute;
-        datalist: HtmlAttribute;
-        dd: HtmlAttribute;
-        del: HtmlAttribute;
-        details: HtmlAttribute;
-        dfn: HtmlAttribute;
-        dialog: HtmlAttribute;
-        div: HtmlAttribute;
-        dl: HtmlAttribute;
-        dt: HtmlAttribute;
-        em: HtmlAttribute;
-        embed: HtmlAttribute;
-        fieldset: HtmlAttribute;
-        figcaption: HtmlAttribute;
-        figure: HtmlAttribute;
-        footer: HtmlAttribute;
-        form: HtmlAttribute;
-        h1: HtmlAttribute;
-        h2: HtmlAttribute;
-        h3: HtmlAttribute;
-        h4: HtmlAttribute;
-        h5: HtmlAttribute;
-        h6: HtmlAttribute;
-        head: HtmlAttribute;
-        header: HtmlAttribute;
-        hr: HtmlAttribute;
-        html: HtmlAttribute;
-        i: HtmlAttribute;
-        iframe: HtmlAttribute;
-        img: HtmlAttribute;
-        input: HtmlAttribute;
-        ins: HtmlAttribute;
-        kbd: HtmlAttribute;
-        keygen: HtmlAttribute;
-        label: HtmlAttribute;
-        legend: HtmlAttribute;
-        li: HtmlAttribute;
-        link: HtmlAttribute;
-        main: HtmlAttribute;
-        map: HtmlAttribute;
-        mark: HtmlAttribute;
-        menu: HtmlAttribute;
-        menuitem: HtmlAttribute;
-        meta: HtmlAttribute;
-        meter: HtmlAttribute;
-        nav: HtmlAttribute;
-        noscript: HtmlAttribute;
-        object: HtmlAttribute;
-        ol: HtmlAttribute;
-        optgroup: HtmlAttribute;
-        option: HtmlAttribute;
-        output: HtmlAttribute;
-        p: HtmlAttribute;
-        param: HtmlAttribute;
-        picture: HtmlAttribute;
-        pre: HtmlAttribute;
-        progress: HtmlAttribute;
-        q: HtmlAttribute;
-        rp: HtmlAttribute;
-        rt: HtmlAttribute;
-        ruby: HtmlAttribute;
-        s: HtmlAttribute;
-        samp: HtmlAttribute;
-        script: HtmlAttribute;
-        section: HtmlAttribute;
-        select: HtmlAttribute;
-        small: HtmlAttribute;
-        source: HtmlAttribute;
-        span: HtmlAttribute;
-        strong: HtmlAttribute;
-        style: HtmlAttribute;
-        sub: HtmlAttribute;
-        summary: HtmlAttribute;
-        sup: HtmlAttribute;
-        table: HtmlAttribute;
-        tbody: HtmlAttribute;
-        td: HtmlAttribute;
-        textarea: HtmlAttribute;
-        tfoot: HtmlAttribute;
-        th: HtmlAttribute;
-        thead: HtmlAttribute;
-        time: HtmlAttribute;
-        title: HtmlAttribute;
-        tr: HtmlAttribute;
-        track: HtmlAttribute;
-        u: HtmlAttribute;
-        ul: HtmlAttribute;
-        "var": HtmlAttribute;
-        video: HtmlAttribute;
-        wbr: HtmlAttribute;
+        a: HTMLAttribute;
+        abbr: HTMLAttribute;
+        address: HTMLAttribute;
+        area: HTMLAttribute;
+        article: HTMLAttribute;
+        aside: HTMLAttribute;
+        audio: HTMLAttribute;
+        b: HTMLAttribute;
+        base: HTMLAttribute;
+        bdi: HTMLAttribute;
+        bdo: HTMLAttribute;
+        big: HTMLAttribute;
+        blockquote: HTMLAttribute;
+        body: HTMLAttribute;
+        br: HTMLAttribute;
+        button: HTMLAttribute;
+        canvas: HTMLAttribute;
+        caption: HTMLAttribute;
+        cite: HTMLAttribute;
+        code: HTMLAttribute;
+        col: HTMLAttribute;
+        colgroup: HTMLAttribute;
+        data: HTMLAttribute;
+        datalist: HTMLAttribute;
+        dd: HTMLAttribute;
+        del: HTMLAttribute;
+        details: HTMLAttribute;
+        dfn: HTMLAttribute;
+        dialog: HTMLAttribute;
+        div: HTMLAttribute;
+        dl: HTMLAttribute;
+        dt: HTMLAttribute;
+        em: HTMLAttribute;
+        embed: HTMLAttribute;
+        fieldset: HTMLAttribute;
+        figcaption: HTMLAttribute;
+        figure: HTMLAttribute;
+        footer: HTMLAttribute;
+        form: HTMLAttribute;
+        h1: HTMLAttribute;
+        h2: HTMLAttribute;
+        h3: HTMLAttribute;
+        h4: HTMLAttribute;
+        h5: HTMLAttribute;
+        h6: HTMLAttribute;
+        head: HTMLAttribute;
+        header: HTMLAttribute;
+        hr: HTMLAttribute;
+        html: HTMLAttribute;
+        i: HTMLAttribute;
+        iframe: HTMLAttribute;
+        img: HTMLAttribute;
+        input: HTMLAttribute;
+        ins: HTMLAttribute;
+        kbd: HTMLAttribute;
+        keygen: HTMLAttribute;
+        label: HTMLAttribute;
+        legend: HTMLAttribute;
+        li: HTMLAttribute;
+        link: HTMLAttribute;
+        main: HTMLAttribute;
+        map: HTMLAttribute;
+        mark: HTMLAttribute;
+        menu: HTMLAttribute;
+        menuitem: HTMLAttribute;
+        meta: HTMLAttribute;
+        meter: HTMLAttribute;
+        nav: HTMLAttribute;
+        noscript: HTMLAttribute;
+        object: HTMLAttribute;
+        ol: HTMLAttribute;
+        optgroup: HTMLAttribute;
+        option: HTMLAttribute;
+        output: HTMLAttribute;
+        p: HTMLAttribute;
+        param: HTMLAttribute;
+        picture: HTMLAttribute;
+        pre: HTMLAttribute;
+        progress: HTMLAttribute;
+        q: HTMLAttribute;
+        rp: HTMLAttribute;
+        rt: HTMLAttribute;
+        ruby: HTMLAttribute;
+        s: HTMLAttribute;
+        samp: HTMLAttribute;
+        script: HTMLAttribute;
+        section: HTMLAttribute;
+        select: HTMLAttribute;
+        small: HTMLAttribute;
+        source: HTMLAttribute;
+        span: HTMLAttribute;
+        strong: HTMLAttribute;
+        style: HTMLAttribute;
+        sub: HTMLAttribute;
+        summary: HTMLAttribute;
+        sup: HTMLAttribute;
+        table: HTMLAttribute;
+        tbody: HTMLAttribute;
+        td: HTMLAttribute;
+        textarea: HTMLAttribute;
+        tfoot: HTMLAttribute;
+        th: HTMLAttribute;
+        thead: HTMLAttribute;
+        time: HTMLAttribute;
+        title: HTMLAttribute;
+        tr: HTMLAttribute;
+        track: HTMLAttribute;
+        u: HTMLAttribute;
+        ul: HTMLAttribute;
+        "var": HTMLAttribute;
+        video: HTMLAttribute;
+        wbr: HTMLAttribute;
 
         // SVG
         svg: SvgElementAttributes;
 
-        circle: SvgAttributes;
-        defs: SvgAttributes;
-        ellipse: SvgAttributes;
-        g: SvgAttributes;
-        line: SvgAttributes;
-        linearGradient: SvgAttributes;
-        mask: SvgAttributes;
-        path: SvgAttributes;
-        pattern: SvgAttributes;
-        polygon: SvgAttributes;
-        polyline: SvgAttributes;
-        radialGradient: SvgAttributes;
-        rect: SvgAttributes;
-        stop: SvgAttributes;
-        text: SvgAttributes;
-        tspan: SvgAttributes;
+        circle: SVGAttributes;
+        defs: SVGAttributes;
+        ellipse: SVGAttributes;
+        g: SVGAttributes;
+        line: SVGAttributes;
+        linearGradient: SVGAttributes;
+        mask: SVGAttributes;
+        path: SVGAttributes;
+        pattern: SVGAttributes;
+        polygon: SVGAttributes;
+        polyline: SVGAttributes;
+        radialGradient: SVGAttributes;
+        rect: SVGAttributes;
+        stop: SVGAttributes;
+        text: SVGAttributes;
+        tspan: SVGAttributes;
     }
 
     interface AbstractView {
@@ -254,7 +254,7 @@ declare module JSX {
 
     // This interface is not complete. Only properties accepting
     // unitless numbers are listed here (see CSSProperty.js in React)
-    interface CssProperties {
+    interface CSSProperties {
         boxFlex?: number;
         boxFlexGroup?: number;
         columnCount?: number;
@@ -277,7 +277,7 @@ declare module JSX {
         strokeWidth?: number;
     }
 
-    interface DomAttributes {
+    interface DOMAttributes {
         onCopy?: ClipboardEventHandler;
         onCut?: ClipboardEventHandler;
         onPaste?: ClipboardEventHandler;
@@ -318,12 +318,12 @@ declare module JSX {
         };
     }
 
-    interface SvgElementAttributes extends HtmlAttribute {
+    interface SvgElementAttributes extends HTMLAttribute {
         viewBox?: string;
         preserveAspectRatio?: string;
     }
 
-    interface HtmlAttribute extends DomAttributes {
+    interface HTMLAttribute extends DOMAttributes {
         ref?: string;
 
         accept?: string;
@@ -423,7 +423,7 @@ declare module JSX {
         srcSet?: string;
         start?: number;
         step?: number | string;
-        style?: CssProperties;
+        style?: CSSProperties;
         tabIndex?: number;
         target?: string;
         title?: string;
@@ -443,7 +443,7 @@ declare module JSX {
         unselectable?: boolean;
     }
 
-    interface SvgAttributes extends DomAttributes {
+    interface SVGAttributes extends DOMAttributes {
         cx?: number | string;
         cy?: number | string;
         d?: string;

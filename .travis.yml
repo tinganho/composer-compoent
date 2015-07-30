@@ -2,5 +2,5 @@ language: node_js
 node_js:
     - "0.12"
 before_install:
-    - npm install typescript -g
+    - npm install typescript@next -g
     - npm install gulp-cli -g

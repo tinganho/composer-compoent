@@ -1,4 +1,5 @@
-
 .gitattributes
 .editorconfig
 .travis.yml
+test
+typings
