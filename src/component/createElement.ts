@@ -88,10 +88,13 @@ export function createElement(
             }
 
             for (let p in props) {
+                if (typeof props[p] !== 'boolean' && typeof props[p] !== 'string') {
+                    continue;
+                }
                 if (p === 'id' && !component.hasRenderedFirstElement) {
                     continue;
                 }
-                else if (typeof props[p] === 'boolean') {
+                if (typeof props[p] === 'boolean') {
                     frag += ` ${convertCamelCasesToDashes(p)}`;
                 }
                 else if (p === 'ref') {
