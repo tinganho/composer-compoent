@@ -8,14 +8,15 @@ declare module 'gulp-mocha-phantomjs' {
     }
 
     interface PhantomJsOptions {
-        viewportSize: Dimension;
+        viewportSize?: Dimension;
+        useColor?: boolean;
     }
 
     interface Options {
-        reporter: string;
-        mocha: any;
-        dump: string;
-        phantomjs: PhantomJsOptions;
+        reporter?: string;
+        mocha?: any;
+        dump?: string;
+        phantomjs?: PhantomJsOptions;
     }
 
     function run(options?: Options): NodeJS.WritableStream;

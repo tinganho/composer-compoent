@@ -24,7 +24,9 @@ var exec = cp.exec;
 function streamTest(): NodeJS.WritableStream {
     return gulp
         .src('local/test/runner.html')
-        .pipe(mochaPhantomJs());
+        .pipe(mochaPhantomJs({ reporter: 'spec', phantomjs: {
+            useColors: true
+        }}));
 }
 
 gulp.task('clean', () => {
