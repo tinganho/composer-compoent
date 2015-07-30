@@ -16,13 +16,17 @@ export abstract class Component<P extends Props, S, E extends Elements> {
     /**
      * Stored elements defined with ref attribute.
      */
-    public elems: E;
+    public elements: E;
+
+    /**
+     * Current state of component.
+     */
     public states: S;
 
     /**
      * Put your localization strings here.
      */
-    public locls: any;
+    public l10ns: any;
 
     /**
      * Platform flags.
@@ -34,14 +38,19 @@ export abstract class Component<P extends Props, S, E extends Elements> {
 
     /* @internal */
     public hasBoundDom = false;
+
+    /* @internal */
     public children: Child[];
+
+    /* @internal */
+    public elementComponents: Component<any, any, any>[];
 
     constructor(
         public props: P,
         children?: Child[]) {
 
-        if (!this.props.id) {
-            Debug.error('You must define an id for your component {0}', (this as any).contructor.name);
+        if (!this.props || !this.props.id) {
+            Debug.error('You must define an id for your component {0}', (this as any).constructor.name);
         }
         this.children = children;
     }
@@ -88,12 +97,15 @@ export abstract class Component<P extends Props, S, E extends Elements> {
     }
 
     /**
-     * Bind DOM interactions is the first function to be called during all page loads
-     * to bind the component with the DOM. All elements are already binded so there is
-     * no need to bind them. Please bind any interactions that you find suitable.
+     * Bind DOM is the first function to be called during all page loads to bind the
+     * component with the DOM. All elements are already binded so there is no need to
+     * bind them. Please bind any interactions that you find suitable.
      */
-    public bindDOMInteractions(): void {
+    public bindDOM(): void {
         this.root = document.getElementById(this.props.id);
+        for (let el of this.elementComponents) {
+            el.bindDOM();
+        }
     }
 
     /* @internal */

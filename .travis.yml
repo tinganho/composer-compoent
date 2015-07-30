@@ -4,6 +4,3 @@ node_js:
 before_install:
     - npm install typescript@next -g
     - npm install gulp-cli -g
-before_script:
-    - tsc
-    - gulp copy-server-files

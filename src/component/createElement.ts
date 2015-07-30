@@ -28,10 +28,10 @@ export function createElement(
                     continue;
                 }
                 else if (p === 'ref') {
-                    if (props[p] in component.elems) {
+                    if (props[p] in component.elements) {
                         console.warn(`You are overriding the element reference '${(component as any).props[p]}'.`);
                     }
-                    component.elems[props[p]] = new DomElement(child);
+                    component.elements[props[p]] = new DomElement(child);
                 }
                 else {
                     child.setAttribute(convertCamelCasesToDashes(p), props[p]);
@@ -43,6 +43,7 @@ export function createElement(
         else {
             let el = new element(props, children);
             frag.appendChild(el.toDOM());
+            component.elementComponents.push(el);
         }
 
         for (let child of children) {
@@ -148,7 +149,7 @@ export function createElement(
 
         for (let p in props) {
             if (p === 'ref') {
-                component.elems[props[p]] = component.root.querySelector(`[data-ref="${props[p]}"]`);
+                component.elements[props[p]] = component.root.querySelector(`[data-ref="${props[p]}"]`);
             }
         }
     }
