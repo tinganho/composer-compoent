@@ -1,7 +1,7 @@
 {
-  "name": "composer-template",
+  "name": "composer-component",
   "version": "0.1.0",
-  "description": "Composer template",
+  "description": "Component classes and utilites for the Composer web framework.",
   "main": "built/index.js",
   "directories": {
     "test": "test"
