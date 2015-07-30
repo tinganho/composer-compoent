@@ -13,7 +13,7 @@ export function createElement(
         component = c;
     }
 
-    function toDom(): Node {
+    function toDOM(): Node {
         let frag = document.createDocumentFragment();
         if (typeof element === 'string') {
             let child = document.createElement(element);
@@ -28,10 +28,10 @@ export function createElement(
                     continue;
                 }
                 else if (p === 'ref') {
-                    if (props[p] in component.elements) {
+                    if (props[p] in component.elems) {
                         console.warn(`You are overriding the element reference '${(component as any).props[p]}'.`);
                     }
-                    component.elements[props[p]] = new DomElement(child);
+                    component.elems[props[p]] = new DomElement(child);
                 }
                 else {
                     child.setAttribute(convertCamelCasesToDashes(p), props[p]);
@@ -42,7 +42,7 @@ export function createElement(
         }
         else {
             let el = new element(props, children);
-            frag.appendChild(el.toDom());
+            frag.appendChild(el.toDOM());
         }
 
         for (let child of children) {
@@ -54,14 +54,14 @@ export function createElement(
                     if (c.isIntrinsic) {
                         c.setComponent(component);
                     }
-                    frag.appendChild(c.toDom());
+                    frag.appendChild(c.toDOM());
                 }
             }
             else {
                 if (child.isIntrinsic) {
                     child.setComponent(component);
                 }
-                frag.appendChild(child.toDom());
+                frag.appendChild(child.toDOM());
             }
         }
 
@@ -143,21 +143,21 @@ export function createElement(
      * Set references by binding the elements to the component. Should only
      * be called on the client side.
      */
-    function bindDom(): void {
+    function bindDOM(): void {
         component.root = document.getElementById(component.props.id);
 
         for (let p in props) {
             if (p === 'ref') {
-                component.elements[props[p]] = component.root.querySelector(`[data-ref="${props[p]}"]`);
+                component.elems[props[p]] = component.root.querySelector(`[data-ref="${props[p]}"]`);
             }
         }
     }
 
     return {
-        toDom,
+        toDOM,
         toString,
         setComponent,
-        bindDom,
+        bindDOM,
         isIntrinsic: typeof element === 'string'
     }
 }

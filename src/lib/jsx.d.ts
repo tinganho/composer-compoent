@@ -3,9 +3,9 @@ declare module JSX {
     export interface Element {
         isIntrinsic: boolean;
         toString: () => string;
-        toDom: () => Node;
+        toDOM: () => Node;
         setComponent: (component: any) => void;
-        bindDom: () => void;
+        bindDOM: () => void;
     }
 
     export interface IntrinsicElements {

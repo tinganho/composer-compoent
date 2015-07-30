@@ -41,7 +41,6 @@ gulp.task('compile-typescript-files', ['clean'], (next) => {
         console.log(stderr);
         next(err);
     });
-
 });
 
 gulp.task('copy-server-files', ['clean'], () => {
