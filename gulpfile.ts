@@ -21,6 +21,12 @@ import es = require('event-stream');
 
 var exec = cp.exec;
 
+function streamTest(): NodeJS.WritableStream {
+    return gulp
+        .src('local/test/runner.html')
+        .pipe(mochaPhantomJs());
+}
+
 gulp.task('clean', () => {
     return gulp.src('local', { read: false })
         .pipe(clean());
@@ -62,9 +68,11 @@ gulp.task('copy-server-files', ['clean'], () => {
 gulp.task('compile', ['copy-server-files', 'compile-typescript-files', ]);
 
 gulp.task('test', ['compile'], () => {
-    return gulp
-        .src('local/test/runner.html')
-        .pipe(mochaPhantomJs());
+    return streamTest();
+});
+
+gulp.task('travis-test', () => {
+    return streamTest();
 });
 
 gulp.task('default', ['test']);
