@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-./node_modules/mocha/bin/mocha ./local/test/runner.js --reporter spec

@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "bin/test"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

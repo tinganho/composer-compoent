@@ -21,7 +21,6 @@ import es = require('event-stream');
 
 var exec = cp.exec;
 
-
 gulp.task('clean', () => {
     return gulp.src('local', { read: false })
         .pipe(clean());
