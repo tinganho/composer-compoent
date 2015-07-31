@@ -18,9 +18,10 @@
             });
 
             System.import('./runner.js').then(function() {
-                // mocha.checkLeaks();
+                mocha.checkLeaks();
                 mocha.run();
             });
         </script>
+        <div id="test"></div>
     </body>
 </html>

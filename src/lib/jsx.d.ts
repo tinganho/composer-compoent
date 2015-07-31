@@ -2,10 +2,12 @@
 declare module JSX {
     export interface Element {
         isIntrinsic: boolean;
-        toString: () => string;
-        toDOM: () => Node;
-        setComponent: (component: any) => void;
-        bindDOM: () => void;
+        toString(): string;
+        toDOM(): DocumentFragment;
+        setComponent(component: IComponent): void;
+        bindDOM(): void;
+        getComponent(): IComponent;
+        markAsChildOfRootElement(): void;
     }
 
     export interface IntrinsicElements {
@@ -490,13 +492,45 @@ declare module JSX {
     }
 }
 
+declare interface DOMElement {
+    id: string;
+    element: HTMLElement;
+    findOne(query: string): DOMElement;
+    findAll(query: string): DOMElement[];
+    getText(): string;
+    setAttribute(name: string, value?: string): DOMElement;
+    getHTML(): string;
+    addClass(className: string): DOMElement;
+    removeClass(className: string): DOMElement;
+    append(element: DOMElement): DOMElement;
+    prepend(element: DOMElement): DOMElement;
+    before(element: DOMElement): DOMElement;
+    after(element: DOMElement): DOMElement;
+    remove(): void;
+    hide(): DOMElement;
+    onClick(listener: EventListener): DOMElement;
+    onDbClick(listener: EventListener): DOMElement;
+    onFocus(listener: EventListener): DOMElement;
+    onBlur(listener: EventListener): DOMElement;
+    onSubmit(listener: EventListener): DOMElement;
+}
+
 declare interface Props {
     id: string;
     [prop: string]: string;
 }
 
 declare interface Elements {
-    [ref: string]: HTMLElement;
+    [ref: string]: DOMElement;
 }
 
 declare type Child = JSX.Element | JSX.Element[] | string;
+
+declare interface IComponent {
+    root: DOMElement;
+    props: Props;
+    elements: Elements;
+    hasRenderedFirstElement: boolean;
+    customElements: IComponent[];
+    bindDOM(): void;
+}

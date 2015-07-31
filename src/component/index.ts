@@ -1,3 +1,3 @@
 
-export { createElement } from './createElement';
+export { createElement } from './element';
 export { Component } from './component';

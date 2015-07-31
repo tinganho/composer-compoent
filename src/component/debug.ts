@@ -73,7 +73,7 @@ export namespace Debug {
 
     let levelToCategoryString = {
         0: color('Error', 'red'),
-        1:  color('Warning', 'yellow'),
+        1: color('Warning', 'yellow'),
         2: color('Log', 'magenta'),
     }
 
@@ -120,3 +120,5 @@ export namespace Debug {
         }
     }
 }
+
+export default Debug;

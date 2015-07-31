@@ -125,6 +125,11 @@ declare module gulp {
          * Set to enable debug logging in glob, but not minimatch.
          */
         globDebug?: boolean;
+
+        /**
+         * Set base path.
+         */
+        base?: string;
     }
 
     interface IDestOptions {
@@ -207,15 +212,7 @@ declare module gulp {
          * @param glob a glob string, using node-glob syntax
          * @param opt an optional option object
          */
-        src(glob:string, opt?:ISrcOptions): NodeJS.ReadWriteStream;
-
-        /**
-         * Takes a glob and represents a file structure. Can be piped to plugins.
-         * @param glob an array of glob strings, using node-glob syntax
-         * @param opt an optional option object
-         */
-        src(glob:string[], opt?:ISrcOptions): NodeJS.ReadWriteStream;
-
+        src(glob:string | string[], opt?:ISrcOptions): NodeJS.ReadWriteStream;
 
         /**
          * Can be piped to and it will write files. Re-emits all data passed to it so you can pipe to multiple folders.

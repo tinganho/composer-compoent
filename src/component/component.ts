@@ -6,15 +6,15 @@
 import { Platform, getPlatform } from './platform';
 import { Debug } from './debug';
 
-export abstract class Component<P extends Props, S, E extends Elements> {
+export abstract class Component<P extends Props, S, E extends Elements> implements IComponent {
 
     /**
      * Root element of the component view.
      */
-    public root: Element;
+    public root: DOMElement;
 
     /**
-     * Stored elements defined with ref attribute.
+     * Referenced elements from component.
      */
     public elements: E;
 
@@ -43,7 +43,7 @@ export abstract class Component<P extends Props, S, E extends Elements> {
     public children: Child[];
 
     /* @internal */
-    public elementComponents: Component<any, any, any>[];
+    public customElements: IComponent[] = [];
 
     constructor(
         public props: P,
@@ -53,6 +53,7 @@ export abstract class Component<P extends Props, S, E extends Elements> {
             Debug.error('You must define an id for your component {0}', (this as any).constructor.name);
         }
         this.children = children;
+        (this as any).elements = {}
     }
 
     /**
@@ -82,7 +83,8 @@ export abstract class Component<P extends Props, S, E extends Elements> {
     /**
      * Show is called during initial page load or directly after having switched to
      * a new page. If your component are hidden with styles during initial page load
-     * it is now suitable to show them with thus function.
+     * it is now suitable to show them with this function. Show is also called whenever
+     * a page request failed to unhide components.
      */
     public show(): Promise<void> {
         return Promise.resolve(undefined);
@@ -96,16 +98,18 @@ export abstract class Component<P extends Props, S, E extends Elements> {
         return Promise.resolve(undefined);
     }
 
-    /**
-     * Bind DOM is the first function to be called during all page loads to bind the
-     * component with the DOM. All elements are already binded so there is no need to
-     * bind them. Please bind any interactions that you find suitable.
-     */
+    /* @internal */
     public bindDOM(): void {
-        this.root = document.getElementById(this.props.id);
-        for (let el of this.elementComponents) {
-            el.bindDOM();
-        }
+        this.renderAndSetComponent().bindDOM();
+    }
+
+    /**
+     * Bind Interactions is the first function to be called during all page loads to bind the
+     * component interactions with the DOM. All elements are already binded so there is no need
+     * to bind them. Please bind any interactions that you find suitable.
+     */
+    public bindInteractions(): void {
+
     }
 
     /* @internal */
@@ -114,7 +118,7 @@ export abstract class Component<P extends Props, S, E extends Elements> {
     }
 
     /* @internal */
-    public toDOM(): Node {
+    public toDOM(): DocumentFragment {
         return this.renderAndSetComponent().toDOM();
     }
 

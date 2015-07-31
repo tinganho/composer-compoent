@@ -46,6 +46,9 @@
     },
     "mime/mime.d.ts": {
       "commit": "77ec1408257c677f8fd8d6798ebaf6bd87c11b9d"
+    },
+    "sinon/sinon.d.ts": {
+      "commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
     }
   }
 }

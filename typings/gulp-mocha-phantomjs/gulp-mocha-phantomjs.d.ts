@@ -9,7 +9,7 @@ declare module 'gulp-mocha-phantomjs' {
 
     interface PhantomJsOptions {
         viewportSize?: Dimension;
-        useColor?: boolean;
+        useColors?: boolean;
     }
 
     interface Options {

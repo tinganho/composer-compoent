@@ -1,5 +1,6 @@
 .gitattributes
 .editorconfig
 .travis.yml
+CHANGELOG.md
 test
 typings
