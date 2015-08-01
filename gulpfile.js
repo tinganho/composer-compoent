@@ -1,32 +1,23 @@
 
-/// <reference path="typings/node/node.d.ts"/>
-/// <reference path='typings/gulp/gulp.d.ts'/>
-/// <reference path='typings/gulp-rename/gulp-rename.d.ts'/>
-/// <reference path='typings/gulp-connect/gulp-connect.d.ts'/>
-/// <reference path='typings/gulp-mocha-phantomjs/gulp-mocha-phantomjs.d.ts'/>
-/// <reference path='typings/open/open.d.ts'/>
-/// <reference path='typings/gulp-clean/gulp-clean.d.ts'/>
-/// <reference path='typings/event-stream/event-stream.d.ts'/>
-
-import gulp = require('gulp');
-import rename = require('gulp-rename');
-import path = require('path');
-import fs = require('fs');
-import connect = require('gulp-connect');
-import mochaPhantomJs = require('gulp-mocha-phantomjs');
-import open = require('open');
-import clean = require('gulp-clean');
-import cp = require('child_process');
-import es = require('event-stream');
+var gulp = require('gulp');
+var rename = require('gulp-rename');
+var path = require('path');
+var fs = require('fs');
+var connect = require('gulp-connect');
+var mochaPhantomJs = require('gulp-mocha-phantomjs');
+var open = require('open');
+var clean = require('gulp-clean');
+var cp = require('child_process');
+var es = require('event-stream');
 
 var exec = cp.exec;
 
-gulp.task('clean', () => {
+gulp.task('clean', function() {
     return gulp.src('local', { read: false })
         .pipe(clean());
 });
 
-gulp.task('server-test', () => {
+gulp.task('server-test', function() {
     connect.server({
         root: ['local', 'local/src'],
         port: 3000
@@ -35,15 +26,15 @@ gulp.task('server-test', () => {
     open('http://localhost:3000/test/runner.html');
 });
 
-gulp.task('compile-typescript-files', ['clean'], (next) => {
-    exec('tsc', (err, stdout, stderr) => {
+gulp.task('compile-typescript-files', ['clean'], function(next) {
+    exec('tsc', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         next(err);
     });
 });
 
-gulp.task('copy-server-files', ['clean'], () => {
+gulp.task('copy-server-files', ['clean'], function() {
     var runnerCopyStream = gulp.src('./test/runner.html', { base: './test' })
         .pipe(gulp.dest('./local/test'));
 
@@ -61,7 +52,7 @@ gulp.task('copy-server-files', ['clean'], () => {
 
 gulp.task('compile', ['copy-server-files', 'compile-typescript-files', ]);
 
-gulp.task('test', ['compile'], () => {
+gulp.task('test', ['compile'], function() {
     return gulp
         .src('local/test/runner.html')
         .pipe(mochaPhantomJs({ reporter: 'spec', phantomjs: {
