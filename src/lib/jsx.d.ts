@@ -494,7 +494,7 @@ declare module JSX {
 
 declare interface DOMElement {
     id: string;
-    element: HTMLElement;
+    nativeElement: HTMLElement;
     findOne(query: string): DOMElement;
     findAll(query: string): DOMElement[];
     getText(): string;

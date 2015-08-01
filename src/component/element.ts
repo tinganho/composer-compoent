@@ -79,8 +79,11 @@ export function createElement(
             let el = new element(props, children);
             frag.appendChild(el.toDOM());
 
-            // There is no component for children custom elements. This is only being set
-            // when we encounter a custom element on the root (<C1 id="i1"></C1>).
+            // We want to add a root custom element too. The children custom element
+            // is added above. We do a check of the component variable. There is no
+            // component for children custom elements, but there are one for the a
+            // root custom element, becase the component class calls `setComponent`
+            // and passes the component to this closure.
             if (component) {
                 component.customElements.push(el);
             }
@@ -215,7 +218,6 @@ export function createElement(
                     for (let c of child) {
                         if (c.isIntrinsic) {
                             c.setComponent(component);
-                            c.bindDOM();
                         }
                         else {
                             c.bindDOM();

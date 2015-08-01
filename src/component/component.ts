@@ -50,7 +50,7 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
         children?: Child[]) {
 
         if (!this.props || !this.props.id) {
-            Debug.error('You must define an id for your component {0}', (this as any).constructor.name);
+            Debug.error('You must define an id for your component {0}', (this.constructor as any).name);
         }
         this.children = children;
         (this as any).elements = {}
