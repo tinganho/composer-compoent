@@ -1,6 +1,5 @@
 
 var gulp = require('gulp');
-var rename = require('gulp-rename');
 var path = require('path');
 var fs = require('fs');
 var connect = require('gulp-connect');
