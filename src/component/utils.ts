@@ -51,15 +51,15 @@ export function map<T, U>(array: T[], f: (x: T) => U): U[]{
     return result;
 }
 
-// export function extend<T1, T2>(first: Map<T1>, second: Map<T2>): Map<T1 & T2> {
-//     let result: Map<T1 & T2> = {};
-//     for (let id in first) {
-//         result[id] = first[id];
-//     }
-//     for (let id in second) {
-//         if (!hasProperty(result, id)) {
-//             result[id] = second[id];
-//         }
-//     }
-//     return result;
-// }
+export function extend<T>(first: Map<T>, second: Map<T>): Map<T> {
+    let result: Map<T> = {};
+    for (let id in first) {
+        result[id] = first[id];
+    }
+    for (let id in second) {
+        if (!hasProperty(result, id)) {
+            result[id] = second[id];
+        }
+    }
+    return result;
+}

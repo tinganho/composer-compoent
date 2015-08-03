@@ -5,7 +5,8 @@
 
 import { Platform, getPlatform } from './platform';
 import { Debug } from './debug';
-import { unsetInstantiatedComponents, getInstantiatedComponents } from './element'
+import { unsetInstantiatedComponents, getInstantiatedComponents } from './element';
+import * as u from './utils';
 
 export abstract class Component<P extends Props, S, E extends Elements> implements IComponent {
 
@@ -13,6 +14,11 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
      * Root element of the component view.
      */
     public root: DOMElement;
+
+    /**
+     * Properties.
+     */
+    public props: P;
 
     /**
      * Referenced elements from component.
@@ -53,8 +59,10 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
     private renderId: number;
 
     constructor(
-        public props: P,
+        props: P,
         children?: Child[]) {
+
+        this.props = u.extend(props, this.props) as P;
 
         if (!this.props || !this.props.id) {
             Debug.error('You must define an id for your component {0}', (this.constructor as any).name);
@@ -130,6 +138,11 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
             componentBuilder[c] = instantiatedComponents[c];
         }
         return componentBuilder;
+    }
+
+    /* @internal */
+    public instantiateComponents(renderId: number) {
+        this.renderAndSetComponent().instantiateComponents(renderId);
     }
 
     /* @internal */

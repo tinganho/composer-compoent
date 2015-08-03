@@ -68,6 +68,9 @@ export function createElement(
             }
 
             for (let child of children) {
+                if (!child) {
+                    continue;
+                }
                 if (typeof child === 'string') {
                     root.textContent += child;
                 }
@@ -97,7 +100,7 @@ export function createElement(
         else {
             let customElement: IComponent;
             if (instantiatedComponents[renderId] &&
-                props.id === instantiatedComponents[renderId][props.id]) {
+                instantiatedComponents[renderId][props.id]) {
 
                 customElement = instantiatedComponents[renderId][props.id];
             }
@@ -173,6 +176,9 @@ export function createElement(
             component.hasRenderedFirstElement = true;
 
             for (let child of children) {
+                if (!child) {
+                    continue;
+                }
                 if (typeof child === 'string') {
                     frag += child;
                 }
@@ -202,7 +208,7 @@ export function createElement(
         else {
             let customElement: IComponent;
             if (instantiatedComponents[renderId] &&
-                props.id === instantiatedComponents[renderId][props.id]) {
+                instantiatedComponents[renderId][props.id]) {
 
                 customElement = instantiatedComponents[renderId][props.id]
             }
@@ -251,7 +257,7 @@ export function createElement(
             }
 
             for (let child of children) {
-                if (typeof child === 'string') {
+                if (!child || typeof child === 'string') {
                     continue;
                 }
                 else if (u.isArray<JSX.Element[]>(child)) {
@@ -267,7 +273,7 @@ export function createElement(
         else {
             let el: IComponent;
             if (instantiatedComponents[renderId] &&
-                props.id === instantiatedComponents[renderId][props.id]) {
+                instantiatedComponents[renderId][props.id]) {
 
                 el = instantiatedComponents[renderId][props.id]
             }
@@ -306,36 +312,37 @@ export function createElement(
         if (!renderId) {
             renderId = getRenderId();
         }
-        instantiatedComponents[renderId] = {}
+        if (!instantiatedComponents[renderId]) {
+            instantiatedComponents[renderId] = {};
+        }
         if (typeof element === 'string') {
             for (let child of children) {
-                if (typeof child === 'string') {
+                if (!child || typeof child === 'string') {
                     continue;
                 }
                 else if (u.isArray<JSX.Element[]>(child)) {
                     for (let c of child) {
-                        if (c.isCustomElement) {
-                            c.instantiateComponents(renderId);
-                            let component = c.getComponent();
-                            instantiatedComponents[renderId][component.props.id] = component;
-                        }
+                        instantiateChildComponents(c);
                     }
                 }
                 else {
-                    if (child.isCustomElement) {
-                        child.instantiateComponents(renderId);
-                        let component = child.getComponent();
-                        instantiatedComponents[renderId][component.props.id] = component;
-                    }
+                    instantiateChildComponents(child);
                 }
             }
         }
         else {
-            component = new element(props, children);
-            instantiatedComponents[renderId][component.props.id] = component;
+            let elementComponent = new element(props, children);
+            instantiatedComponents[renderId][props.id] = elementComponent;
+            elementComponent.instantiateComponents(renderId);
         }
 
         return renderId;
+
+        function instantiateChildComponents(child: JSX.Element): void {
+            if (child.isCustomElement) {
+                child.instantiateComponents(renderId);
+            }
+        }
     }
 
     return {

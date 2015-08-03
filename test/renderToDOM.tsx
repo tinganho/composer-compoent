@@ -5,7 +5,7 @@
 
 import React = require('../src/component/index');
 import { Component } from '../src/component/index';
-import { getMountedDOMHTMLString, customElementsLength } from '../src/harness/harness';
+import { getMountedDOMHTMLString } from '../src/harness/harness';
 import { expect } from 'chai';
 
 interface P extends Props { }
