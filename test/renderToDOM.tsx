@@ -1,10 +1,11 @@
+
 /// <reference path='../src/lib/jsx.d.ts' />
 /// <reference path='../typings/mocha/mocha.d.ts' />
 /// <reference path='../typings/chai/chai.d.ts' />
 
 import React = require('../src/component/index');
 import { Component } from '../src/component/index';
-import { getMountedDOMHTMLString } from '../src/harness/harness';
+import { getMountedDOMHTMLString, customElementsLength } from '../src/harness/harness';
 import { expect } from 'chai';
 
 interface P extends Props { }
@@ -238,8 +239,8 @@ describe('Render to DOM', () => {
 
             let c1 = new C1({ id: 'i1'});
             c1.toDOM();
-            expect(c1.customElements.length).to.equal(1);
-            expect(c1.customElements[0].toString()).to.equal('<div id="i2"></div>');
+            expect(Object.keys(c1.customElements).length).to.equal(1);
+            expect(c1.customElements['i2'].toString()).to.equal('<div id="i2"></div>');
         });
 
         it('multiple flat custom elements', () => {
@@ -266,9 +267,7 @@ describe('Render to DOM', () => {
 
             let c1 = new C1({ id: 'i1'});
             c1.toDOM();
-            expect(c1.customElements.length).to.equal(1);
-            expect(c1.customElements[0].customElements.length).to.equal(2);
-            expect(c1.customElements[0].toString()).to.equal('<div id="i2"><div id="i3"></div><div id="i4"></div></div>');
+            expect(c1.customElements['i2'].toString()).to.equal('<div id="i2"><div id="i3"></div><div id="i4"></div></div>');
         });
 
         it('multiple nested custom elements', () => {
@@ -290,9 +289,7 @@ describe('Render to DOM', () => {
 
             let c1 = new C1({ id: 'i1'});
             c1.toDOM();
-            expect(c1.customElements.length).to.equal(1);
-            expect(c1.customElements[0].customElements.length).to.equal(1);
-            expect(c1.customElements[0].toString()).to.equal('<div id="i2"><div id="i3"></div></div>');
+            expect(c1.customElements['i2'].toString()).to.equal('<div id="i2"><div id="i3"></div></div>');
         });
     });
 });

@@ -59,8 +59,8 @@ describe('Bind DOM', () => {
 
         let c1 = new C1({ id: 'i1'});
         c1.bindDOM();
-        expect(c1.customElements.length).to.equal(1);
-        expect(c1.customElements[0].props.id).to.equal('i2');
+        expect(Object.keys(c1.customElements).length).to.equal(1);
+        expect(c1.customElements['i2'].props.id).to.equal('i2');
     });
 
     it('multiple flat custom element', () => {
@@ -86,9 +86,9 @@ describe('Bind DOM', () => {
 
         let c1 = new C1({ id: 'i1'});
         c1.bindDOM();
-        expect(c1.customElements.length).to.equal(2);
-        expect(c1.customElements[0].props.id).to.equal('i2');
-        expect(c1.customElements[1].props.id).to.equal('i3');
+        expect(Object.keys(c1.customElements).length).to.equal(2);
+        expect(c1.customElements['i2'].props.id).to.equal('i2');
+        expect(c1.customElements['i3'].props.id).to.equal('i3');
     });
 
     it('multiple nested custom element', () => {
@@ -114,8 +114,10 @@ describe('Bind DOM', () => {
 
         let c1 = new C1({ id: 'i1'});
         c1.bindDOM();
-        expect(c1.customElements.length).to.equal(1);
-        expect(c1.customElements[0].props.id).to.equal('i2');
-        expect(c1.customElements[0].customElements.length).to.equal(1);
+        expect(Object.keys(c1.customElements).length).to.equal(1);
+        expect(c1.customElements['i2'].props.id).to.equal('i2');
+        expect(Object.keys(c1.customElements['i2'].customElements).length).to.equal(1);
+        expect(c1.customElements['i2'].customElements['i3'].props.id).to.equal('i3');
+
     });
 });

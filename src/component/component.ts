@@ -5,6 +5,7 @@
 
 import { Platform, getPlatform } from './platform';
 import { Debug } from './debug';
+import { unsetInstantiatedComponents, getInstantiatedComponents } from './element'
 
 export abstract class Component<P extends Props, S, E extends Elements> implements IComponent {
 
@@ -43,7 +44,13 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
     public children: Child[];
 
     /* @internal */
-    public customElements: IComponent[] = [];
+    public customElements: Components = {};
+
+    /* @internal */
+    public instantiatedComponents: Components;
+
+    private matchComponents: string[];
+    private renderId: number;
 
     constructor(
         public props: P,
@@ -74,7 +81,7 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
     /**
      * Hide is called immediately after a route have been matched and the current
      * component does not belong to the next page. This function is suitable to do
-     * some hiding animation or display load bars before next page is being rendered.
+     * some hiding animation or display loadbars before next page is being rendered.
      */
     public hide(): Promise<void> {
         return Promise.resolve(undefined);
@@ -112,20 +119,39 @@ export abstract class Component<P extends Props, S, E extends Elements> implemen
 
     }
 
-    /* @internal */
-    public toString(): string {
-        return this.renderAndSetComponent().toString();
+    /**
+     * Get instances of components before they are rendered.
+     */
+    public getInstancesOf<R>(...components: string[]): Components {
+        let componentBuilder: Components = {};
+        this.renderId = this.renderAndSetComponent().instantiateComponents();
+        let instantiatedComponents = getInstantiatedComponents(this.renderId);
+        for (let c of components) {
+            componentBuilder[c] = instantiatedComponents[c];
+        }
+        return componentBuilder;
     }
 
     /* @internal */
-    public toDOM(): DocumentFragment {
-        return this.renderAndSetComponent().toDOM();
+    public toString(renderId?: number): string {
+        let s =  this.renderAndSetComponent().toString(renderId || this.renderId);
+        return s;
+    }
+
+    /* @internal */
+    public toDOM(renderId?: number): DocumentFragment {
+        let DOM = this.renderAndSetComponent().toDOM(renderId || this.renderId);
+        return DOM;
     }
 
     /* @internal */
     private renderAndSetComponent(): JSX.Element {
-        let component = this.render();
-        component.setComponent(this);
-        return component;
+        let rootElement = this.render();
+        rootElement.setComponent(this);
+        return rootElement;
     }
+}
+
+export interface Components {
+    [component: string]: IComponent;
 }

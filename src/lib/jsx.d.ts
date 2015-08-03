@@ -1,132 +1,136 @@
 
+/// <reference path='../../typings/es6-promise/es6-promise.d.ts' />
+
 declare module JSX {
     export interface Element {
         isIntrinsic: boolean;
-        toString(): string;
-        toDOM(): DocumentFragment;
+        isCustomElement: boolean;
+        toString(renderId?: number): string;
+        toDOM(renderId?: number): DocumentFragment;
         setComponent(component: IComponent): void;
-        bindDOM(): void;
+        bindDOM(renderId?: number): void;
         getComponent(): IComponent;
+        instantiateComponents(renderId?: number): number;
         markAsChildOfRootElement(): void;
     }
 
     export interface IntrinsicElements {
         // HTML
-        a: HTMLAttribute;
-        abbr: HTMLAttribute;
-        address: HTMLAttribute;
-        area: HTMLAttribute;
-        article: HTMLAttribute;
-        aside: HTMLAttribute;
-        audio: HTMLAttribute;
-        b: HTMLAttribute;
-        base: HTMLAttribute;
-        bdi: HTMLAttribute;
-        bdo: HTMLAttribute;
-        big: HTMLAttribute;
-        blockquote: HTMLAttribute;
-        body: HTMLAttribute;
-        br: HTMLAttribute;
-        button: HTMLAttribute;
-        canvas: HTMLAttribute;
-        caption: HTMLAttribute;
-        cite: HTMLAttribute;
-        code: HTMLAttribute;
-        col: HTMLAttribute;
-        colgroup: HTMLAttribute;
-        data: HTMLAttribute;
-        datalist: HTMLAttribute;
-        dd: HTMLAttribute;
-        del: HTMLAttribute;
-        details: HTMLAttribute;
-        dfn: HTMLAttribute;
-        dialog: HTMLAttribute;
-        div: HTMLAttribute;
-        dl: HTMLAttribute;
-        dt: HTMLAttribute;
-        em: HTMLAttribute;
-        embed: HTMLAttribute;
-        fieldset: HTMLAttribute;
-        figcaption: HTMLAttribute;
-        figure: HTMLAttribute;
-        footer: HTMLAttribute;
-        form: HTMLAttribute;
-        h1: HTMLAttribute;
-        h2: HTMLAttribute;
-        h3: HTMLAttribute;
-        h4: HTMLAttribute;
-        h5: HTMLAttribute;
-        h6: HTMLAttribute;
-        head: HTMLAttribute;
-        header: HTMLAttribute;
-        hr: HTMLAttribute;
-        html: HTMLAttribute;
-        i: HTMLAttribute;
-        iframe: HTMLAttribute;
-        img: HTMLAttribute;
-        input: HTMLAttribute;
-        ins: HTMLAttribute;
-        kbd: HTMLAttribute;
-        keygen: HTMLAttribute;
-        label: HTMLAttribute;
-        legend: HTMLAttribute;
-        li: HTMLAttribute;
-        link: HTMLAttribute;
-        main: HTMLAttribute;
-        map: HTMLAttribute;
-        mark: HTMLAttribute;
-        menu: HTMLAttribute;
-        menuitem: HTMLAttribute;
-        meta: HTMLAttribute;
-        meter: HTMLAttribute;
-        nav: HTMLAttribute;
-        noscript: HTMLAttribute;
-        object: HTMLAttribute;
-        ol: HTMLAttribute;
-        optgroup: HTMLAttribute;
-        option: HTMLAttribute;
-        output: HTMLAttribute;
-        p: HTMLAttribute;
-        param: HTMLAttribute;
-        picture: HTMLAttribute;
-        pre: HTMLAttribute;
-        progress: HTMLAttribute;
-        q: HTMLAttribute;
-        rp: HTMLAttribute;
-        rt: HTMLAttribute;
-        ruby: HTMLAttribute;
-        s: HTMLAttribute;
-        samp: HTMLAttribute;
-        script: HTMLAttribute;
-        section: HTMLAttribute;
-        select: HTMLAttribute;
-        small: HTMLAttribute;
-        source: HTMLAttribute;
-        span: HTMLAttribute;
-        strong: HTMLAttribute;
-        style: HTMLAttribute;
-        sub: HTMLAttribute;
-        summary: HTMLAttribute;
-        sup: HTMLAttribute;
-        table: HTMLAttribute;
-        tbody: HTMLAttribute;
-        td: HTMLAttribute;
-        textarea: HTMLAttribute;
-        tfoot: HTMLAttribute;
-        th: HTMLAttribute;
-        thead: HTMLAttribute;
-        time: HTMLAttribute;
-        title: HTMLAttribute;
-        tr: HTMLAttribute;
-        track: HTMLAttribute;
-        u: HTMLAttribute;
-        ul: HTMLAttribute;
-        "var": HTMLAttribute;
-        video: HTMLAttribute;
-        wbr: HTMLAttribute;
+        a: HTMLAttributes;
+        abbr: HTMLAttributes;
+        address: HTMLAttributes;
+        area: HTMLAttributes;
+        article: HTMLAttributes;
+        aside: HTMLAttributes;
+        audio: HTMLAttributes;
+        b: HTMLAttributes;
+        base: HTMLAttributes;
+        bdi: HTMLAttributes;
+        bdo: HTMLAttributes;
+        big: HTMLAttributes;
+        blockquote: HTMLAttributes;
+        body: HTMLAttributes;
+        br: HTMLAttributes;
+        button: HTMLAttributes;
+        canvas: HTMLAttributes;
+        caption: HTMLAttributes;
+        cite: HTMLAttributes;
+        code: HTMLAttributes;
+        col: HTMLAttributes;
+        colgroup: HTMLAttributes;
+        data: HTMLAttributes;
+        datalist: HTMLAttributes;
+        dd: HTMLAttributes;
+        del: HTMLAttributes;
+        details: HTMLAttributes;
+        dfn: HTMLAttributes;
+        dialog: HTMLAttributes;
+        div: HTMLAttributes;
+        dl: HTMLAttributes;
+        dt: HTMLAttributes;
+        em: HTMLAttributes;
+        embed: HTMLAttributes;
+        fieldset: HTMLAttributes;
+        figcaption: HTMLAttributes;
+        figure: HTMLAttributes;
+        footer: HTMLAttributes;
+        form: HTMLAttributes;
+        h1: HTMLAttributes;
+        h2: HTMLAttributes;
+        h3: HTMLAttributes;
+        h4: HTMLAttributes;
+        h5: HTMLAttributes;
+        h6: HTMLAttributes;
+        head: HTMLAttributes;
+        header: HTMLAttributes;
+        hr: HTMLAttributes;
+        html: HTMLAttributes;
+        i: HTMLAttributes;
+        iframe: HTMLAttributes;
+        img: HTMLAttributes;
+        input: HTMLAttributes;
+        ins: HTMLAttributes;
+        kbd: HTMLAttributes;
+        keygen: HTMLAttributes;
+        label: HTMLAttributes;
+        legend: HTMLAttributes;
+        li: HTMLAttributes;
+        link: HTMLAttributes;
+        main: HTMLAttributes;
+        map: HTMLAttributes;
+        mark: HTMLAttributes;
+        menu: HTMLAttributes;
+        menuitem: HTMLAttributes;
+        meta: HTMLAttributes;
+        meter: HTMLAttributes;
+        nav: HTMLAttributes;
+        noscript: HTMLAttributes;
+        object: HTMLAttributes;
+        ol: HTMLAttributes;
+        optgroup: HTMLAttributes;
+        option: HTMLAttributes;
+        output: HTMLAttributes;
+        p: HTMLAttributes;
+        param: HTMLAttributes;
+        picture: HTMLAttributes;
+        pre: HTMLAttributes;
+        progress: HTMLAttributes;
+        q: HTMLAttributes;
+        rp: HTMLAttributes;
+        rt: HTMLAttributes;
+        ruby: HTMLAttributes;
+        s: HTMLAttributes;
+        samp: HTMLAttributes;
+        script: HTMLAttributes;
+        section: HTMLAttributes;
+        select: HTMLAttributes;
+        small: HTMLAttributes;
+        source: HTMLAttributes;
+        span: HTMLAttributes;
+        strong: HTMLAttributes;
+        style: HTMLAttributes;
+        sub: HTMLAttributes;
+        summary: HTMLAttributes;
+        sup: HTMLAttributes;
+        table: HTMLAttributes;
+        tbody: HTMLAttributes;
+        td: HTMLAttributes;
+        textarea: HTMLAttributes;
+        tfoot: HTMLAttributes;
+        th: HTMLAttributes;
+        thead: HTMLAttributes;
+        time: HTMLAttributes;
+        title: HTMLAttributes;
+        tr: HTMLAttributes;
+        track: HTMLAttributes;
+        u: HTMLAttributes;
+        ul: HTMLAttributes;
+        "var": HTMLAttributes;
+        video: HTMLAttributes;
+        wbr: HTMLAttributes;
 
         // SVG
-        svg: SvgElementAttributes;
+        svg: SVGElementAttributes;
 
         circle: SVGAttributes;
         defs: SVGAttributes;
@@ -320,12 +324,12 @@ declare module JSX {
         };
     }
 
-    interface SvgElementAttributes extends HTMLAttribute {
+    interface SVGElementAttributes extends HTMLAttributes {
         viewBox?: string;
         preserveAspectRatio?: string;
     }
 
-    interface HTMLAttribute extends DOMAttributes {
+    interface HTMLAttributes extends DOMAttributes {
         ref?: string;
 
         accept?: string;
@@ -520,6 +524,10 @@ declare interface Props {
     [prop: string]: string;
 }
 
+declare interface Components {
+    [instance: string]: IComponent;
+}
+
 declare interface Elements {
     [ref: string]: DOMElement;
 }
@@ -531,6 +539,9 @@ declare interface IComponent {
     props: Props;
     elements: Elements;
     hasRenderedFirstElement: boolean;
-    customElements: IComponent[];
-    bindDOM(): void;
+    customElements: { [component: string]: IComponent };
+    bindDOM(renderId?: number): void;
+    toDOM(renderId?: number): DocumentFragment;
+    toString(renderId?: number): string;
+    getInstancesOf<R>(...components: string[]): Components;
 }

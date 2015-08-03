@@ -23,3 +23,13 @@ export function prepareHTML(HTML: string): void {
     let testMount = getMountNode();
     testMount.innerHTML = HTML;
 }
+
+export function customElementsLength(obj: Object): number {
+    let length = 0;
+    for (let i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            length++
+        }
+    }
+    return length;
+}

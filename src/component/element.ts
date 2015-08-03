@@ -1,8 +1,27 @@
 
-import { Component } from './component';
+import { Component, Components } from './component';
 import { ComposerDOMElement } from './DOMElement';
 import Debug from './debug';
 import * as u from './utils';
+
+let id = 0;
+let instantiatedComponents: { [renderId: string]: u.Map<IComponent> } = {};
+
+export function getRenderId(): number {
+    return id++;
+}
+
+export function resetId(): void {
+    id = 0;
+}
+
+export function unsetInstantiatedComponents(renderId: number): void {
+    delete instantiatedComponents[renderId];
+}
+
+export function getInstantiatedComponents(renderId: number): u.Map<IComponent> {
+    return instantiatedComponents[renderId];
+}
 
 export function createElement(
     element: string | (new(props: Props, children: Child[]) => Component<any, any, any>),
@@ -12,15 +31,15 @@ export function createElement(
     let component: IComponent;
     let isChildOfRootElement = false;
 
-    function setComponent(c: IComponent) {
+    function setComponent(c: IComponent): void {
         component = c;
     }
 
-    function markAsChildOfRootElement() {
+    function markAsChildOfRootElement(): void {
         isChildOfRootElement = true;
     }
 
-    function toDOM(): DocumentFragment {
+    function toDOM(renderId?: number): DocumentFragment {
         let frag = document.createDocumentFragment();
         if (typeof element === 'string') {
             let root = document.createElement(element);
@@ -54,11 +73,11 @@ export function createElement(
                 }
                 else if (u.isArray<JSX.Element[]>(child)) {
                     for (let c of child) {
-                        setComponentAndPushElementComponentAndMarkChildOfRootElementAndAppendChild(root, c);
+                        renderChildToDOM(root, c);
                     }
                 }
                 else {
-                    setComponentAndPushElementComponentAndMarkChildOfRootElementAndAppendChild(root, child);
+                    renderChildToDOM(root, child);
                 }
             }
 
@@ -76,8 +95,16 @@ export function createElement(
             }
         }
         else {
-            let el = new element(props, children);
-            frag.appendChild(el.toDOM());
+            let customElement: IComponent;
+            if (instantiatedComponents[renderId] &&
+                props.id === instantiatedComponents[renderId][props.id]) {
+
+                customElement = instantiatedComponents[renderId][props.id];
+            }
+            else {
+                customElement = new element(props, children);
+            }
+            frag.appendChild(customElement.toDOM());
 
             // We want to add a root custom element too. The children custom element
             // is added above. We do a check of the component variable. There is no
@@ -85,21 +112,26 @@ export function createElement(
             // root custom element, becase the component class calls `setComponent`
             // and passes the component to this closure.
             if (component) {
-                component.customElements.push(el);
+                component.customElements[customElement.props.id] = customElement;
+            }
+            else {
+                component = customElement;
             }
         }
 
         return frag;
 
-        function setComponentAndPushElementComponentAndMarkChildOfRootElementAndAppendChild(root: HTMLElement, child: JSX.Element) {
+        function renderChildToDOM(root: HTMLElement, child: JSX.Element) {
             if (child.isIntrinsic) {
                 child.setComponent(component);
                 child.markAsChildOfRootElement();
+                root.appendChild(child.toDOM());
             }
             else {
-                component.customElements.push(child.getComponent());
+                root.appendChild(child.toDOM());
+                let childComponent = child.getComponent();
+                component.customElements[childComponent.props.id] = childComponent;
             }
-            root.appendChild(child.toDOM());
         }
     }
 
@@ -109,7 +141,7 @@ export function createElement(
         });
     }
 
-    function toString(): string {
+    function toString(renderId?: number): string {
         let frag = '';
         if (typeof element === 'string') {
             frag = `<${element}`;
@@ -146,11 +178,11 @@ export function createElement(
                 }
                 else if (u.isArray<JSX.Element[]>(child)) {
                     for (let c of child) {
-                        frag += setComponentAndMarkChildOfRootElementAndRenderToString(c);
+                        frag += renderChildToString(c);
                     }
                 }
                 else {
-                    frag += setComponentAndMarkChildOfRootElementAndRenderToString(child);
+                    frag += renderChildToString(child);
                 }
             }
 
@@ -168,13 +200,21 @@ export function createElement(
             }
         }
         else {
-            let el = new element(props, children);
-            frag += el.toString();
+            let customElement: IComponent;
+            if (instantiatedComponents[renderId] &&
+                props.id === instantiatedComponents[renderId][props.id]) {
+
+                customElement = instantiatedComponents[renderId][props.id]
+            }
+            else {
+                customElement = new element(props, children);
+            }
+            frag += customElement.toString(renderId);
         }
 
         return frag;
 
-        function setComponentAndMarkChildOfRootElementAndRenderToString(child: JSX.Element): string {
+        function renderChildToString(child: JSX.Element): string {
             if (child.isIntrinsic) {
                 child.setComponent(component);
                 child.markAsChildOfRootElement();
@@ -187,7 +227,7 @@ export function createElement(
      * Set references by binding the elements to the component. Should only
      * be called by the composer router.
      */
-    function bindDOM(): void {
+    function bindDOM(renderId?: number): void {
         if (typeof element === 'string') {
             let root = document.getElementById(component.props.id);
             if (!root) {
@@ -216,40 +256,97 @@ export function createElement(
                 }
                 else if (u.isArray<JSX.Element[]>(child)) {
                     for (let c of child) {
-                        if (c.isIntrinsic) {
-                            c.setComponent(component);
-                        }
-                        else {
-                            c.bindDOM();
-                            component.customElements.push(c.getComponent());
+                        bindChildDOM(c);
+                    }
+                }
+                else {
+                    bindChildDOM(child);
+                }
+            }
+        }
+        else {
+            let el: IComponent;
+            if (instantiatedComponents[renderId] &&
+                props.id === instantiatedComponents[renderId][props.id]) {
+
+                el = instantiatedComponents[renderId][props.id]
+            }
+            else {
+                el = new element(props, children);
+            }
+            el.bindDOM(renderId);
+
+            // We want to add a root custom element too. The children custom element
+            // is added above. We do a check of the component variable. There is no
+            // component for children custom elements, but there are one for the a
+            // root custom element, becase the component class calls `setComponent`
+            // and passes the component to this closure.
+            if (component) {
+                component.customElements[el.props.id] = el;
+            }
+            else {
+                component = el;
+            }
+        }
+
+        function bindChildDOM(child: JSX.Element) {
+            if (child.isIntrinsic) {
+                child.setComponent(component);
+                child.bindDOM(renderId);
+            }
+            else {
+                child.bindDOM(renderId);
+                let childComponent = child.getComponent();
+                component.customElements[childComponent.props.id] = childComponent;
+            }
+        }
+    }
+
+    function instantiateComponents(renderId?: number): number {
+        if (!renderId) {
+            renderId = getRenderId();
+        }
+        instantiatedComponents[renderId] = {}
+        if (typeof element === 'string') {
+            for (let child of children) {
+                if (typeof child === 'string') {
+                    continue;
+                }
+                else if (u.isArray<JSX.Element[]>(child)) {
+                    for (let c of child) {
+                        if (c.isCustomElement) {
+                            c.instantiateComponents(renderId);
+                            let component = c.getComponent();
+                            instantiatedComponents[renderId][component.props.id] = component;
                         }
                     }
                 }
                 else {
-                    if (child.isIntrinsic) {
-                        child.setComponent(component);
-                        child.bindDOM();
-                    }
-                    else {
-                        child.bindDOM();
-                        component.customElements.push(child.getComponent());
+                    if (child.isCustomElement) {
+                        child.instantiateComponents(renderId);
+                        let component = child.getComponent();
+                        instantiatedComponents[renderId][component.props.id] = component;
                     }
                 }
             }
         }
         else {
-            let el = component = new element(props, children);
-            el.bindDOM();
+            component = new element(props, children);
+            instantiatedComponents[renderId][component.props.id] = component;
         }
+
+        return renderId;
     }
 
     return {
-        toDOM,
-        toString,
-        setComponent,
-        bindDOM,
         isIntrinsic: typeof element === 'string',
+        isCustomElement: typeof element !== 'string',
         getComponent: () => component,
         markAsChildOfRootElement,
+        instantiateComponents,
+        setComponent,
+        toString,
+        bindDOM,
+        toDOM,
     }
 }
