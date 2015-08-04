@@ -1,3 +1,4 @@
+
 /// <reference path='../src/lib/jsx.d.ts' />
 /// <reference path='../typings/mocha/mocha.d.ts' />
 /// <reference path='../typings/chai/chai.d.ts' />
@@ -118,6 +119,5 @@ describe('Bind DOM', () => {
         expect(c1.customElements['i2'].props.id).to.equal('i2');
         expect(Object.keys(c1.customElements['i2'].customElements).length).to.equal(1);
         expect(c1.customElements['i2'].customElements['i3'].props.id).to.equal('i3');
-
     });
 });

@@ -19,6 +19,10 @@ export class ComposerDOMElement implements DOMElement {
         return this.nativeElement.id;
     }
 
+    public set id(id: string) {
+        this.nativeElement.id = id;
+    }
+
     private isComposerDOMElement(element: HTMLElement | DOMElement): element is DOMElement {
         return !!(element as ComposerDOMElement).findOne;
     }
@@ -39,6 +43,10 @@ export class ComposerDOMElement implements DOMElement {
         return this.nativeElement.textContent;
     }
 
+    public getAttribute(name: string): string {
+        return this.nativeElement.getAttribute(name);
+    }
+
     public setAttribute(name: string, value?: string): ComposerDOMElement {
         this.nativeElement.setAttribute(name, value);
         return this;
@@ -48,33 +56,33 @@ export class ComposerDOMElement implements DOMElement {
         return this.nativeElement.innerHTML;
     }
 
-    public append(element: DOMElement): ComposerDOMElement {
-        this.nativeElement.parentNode.appendChild(element.nativeElement);
+    public append(element: ComposerDOMElement): ComposerDOMElement {
+        this.nativeElement.appendChild(element.nativeElement);
         return this;
     }
 
-    public prepend(element: DOMElement): ComposerDOMElement {
-        this.nativeElement.parentNode.insertBefore(element.nativeElement, this.nativeElement.parentNode.firstChild);
+    public prepend(element: ComposerDOMElement): ComposerDOMElement {
+        this.nativeElement.insertBefore(element.nativeElement, this.nativeElement.firstChild);
         return this;
     }
 
-    public before(element: DOMElement): ComposerDOMElement {
+    public before(element: ComposerDOMElement): ComposerDOMElement {
         this.nativeElement.parentNode.insertBefore(element.nativeElement, this.nativeElement);
         return this;
     }
 
-    public after(element: DOMElement): ComposerDOMElement {
+    public after(element: ComposerDOMElement): ComposerDOMElement {
         this.nativeElement.parentNode.insertBefore(element.nativeElement, this.nativeElement.parentNode.lastChild);
         return this;
     }
 
     public hide(): ComposerDOMElement {
-        this.nativeElement.style.direction = 'none';
+        this.nativeElement.style.display = 'none';
         return this;
     }
 
     public remove(): void {
-        this.nativeElement.remove();
+        this.nativeElement.parentElement.removeChild(this.nativeElement);
     }
 
     public addClass(className: string): ComposerDOMElement {
@@ -85,6 +93,10 @@ export class ComposerDOMElement implements DOMElement {
     public removeClass(className: string): ComposerDOMElement {
         this.nativeElement.classList.remove(className);
         return this;
+    }
+
+    public getClasses(): string[] {
+        return this.nativeElement.className.split(' ');
     }
 
     public onClick(listener: EventListener): ComposerDOMElement {
